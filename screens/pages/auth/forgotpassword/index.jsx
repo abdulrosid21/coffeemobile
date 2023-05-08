@@ -1,17 +1,31 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
 function ForgotPassword() {
   return (
-    <View className="w-screen h-screen bg-blue-200">
-      <View className="flex justify-center m-auto">
-        <Text className="text-neutral-800 text-center font-semibold font-['Rubik'] ">
-          Try editing me! 🎉
+    <View className="w-screen h-full bg-white">
+      <View className="justify-center h-full my-auto px-[8%]">
+        <Text className="text-center font-poppins-semibold text-black text-7xl p-2">
+          Don’t Worry!
         </Text>
-        <Text className="text-neutral-800">
-          {' '}
-          Hello from another ForgotPassword
+        <Text className="text-center font-poppins-reguler text-lg text-black">
+          Enter your email adress to get reset password link
         </Text>
+        <Image
+          className="mx-auto"
+          source={require('../../../../assets/images/forgot.png')}
+        />
+        <TextInput
+          className="w-full border-[#9F9F9F] border-b-[1px] pb-1"
+          placeholder="Enter your email adress"
+        />
+        <View className="mt-7">
+          <TouchableOpacity className="h-16 bg-brown rounded-xl mt-3">
+            <Text className="text-white m-auto font-poppins-semibold">
+              Send Link
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 function Wellcome({navigation}) {
-  const token = false;
+  const token = true;
 
   return (
     <View className="w-screen h-screen bg-neutral-100">
