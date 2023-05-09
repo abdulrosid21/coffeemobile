@@ -10,10 +10,12 @@ const Header = props => {
           style={{width: 24, height: 24}}
         />
       </TouchableOpacity>
-      <Image
-        source={require('../../../assets/images/shopping-cart.png')}
-        style={{width: 30, height: 30}}
-      />
+      <TouchableOpacity onPress={() => props.navigation.navigate('Cart')}>
+        <Image
+          source={require('../../../assets/images/shopping-cart.png')}
+          style={{width: 30, height: 30}}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

@@ -9,6 +9,11 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Home from '../pages/home';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Detail from '../pages/detail';
+import Cart from '../pages/cart';
+import Checkout from '../pages/checkout';
+import Payments from '../pages/payments';
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -168,6 +173,16 @@ function SideBar() {
         component={Home}
         options={{headerShown: false}}
       />
+      <Drawer.Screen
+        name="Detail"
+        component={Detail}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="Cart"
+        component={Cart}
+        options={{headerShown: false}}
+      />
     </Drawer.Navigator>
   );
 }
@@ -178,6 +193,26 @@ function App() {
       <Stack.Screen
         name="App Home"
         component={SideBar}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={Detail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Checkout"
+        component={Checkout}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Payments"
+        component={Payments}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

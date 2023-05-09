@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, TextInput, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Header from '../../components/headers';
 
 import CategoryList from '../../components/listcategory';
@@ -32,20 +39,22 @@ function Home(props) {
           className="flex-row gap-3"
           horizontal={true}
           showsHorizontalScrollIndicator={false}>
-          <View className="w-[220px] h-[270px]">
-            <View className="h-[220px] mt-auto  bg-white rounded-3xl">
-              <Image
-                className="mx-auto -mt-16"
-                source={require('../../../assets/images/hazelnut.png')}
-              />
-              <Text className="mx-auto my-3 font-poppins-semibold text-xl text-black">
-                Hazelnut Latte
-              </Text>
-              <Text className="mx-auto font-poppins-reguler text-xl text-[#6A4029]">
-                IDR 25.000
-              </Text>
+          <TouchableOpacity onPress={() => props.navigation.push('Detail')}>
+            <View className="w-[220px] h-[270px]">
+              <View className="h-[220px] mt-auto  bg-white rounded-3xl">
+                <Image
+                  className="mx-auto -mt-16"
+                  source={require('../../../assets/images/hazelnut.png')}
+                />
+                <Text className="mx-auto my-3 font-poppins-semibold text-xl text-black">
+                  Hazelnut Latte
+                </Text>
+                <Text className="mx-auto font-poppins-reguler text-xl text-[#6A4029]">
+                  IDR 25.000
+                </Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
           <View className="w-[220px] h-[270px]">
             <View className="h-[220px] mt-auto  bg-white rounded-3xl">
               <Image

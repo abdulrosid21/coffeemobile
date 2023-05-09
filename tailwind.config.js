@@ -7,6 +7,7 @@ module.exports = {
         'poppins-black': ['Poppins-Black', 'sans-serif'],
         'poppins-reguler': ['Poppins-Reguler', 'sans-serif'],
         'poppins-semibold': ['Poppins-SemiBold', 'sans-serif'],
+        'poppins-bold': ['Poppins-Bold', 'sans-serif'],
       },
     },
     colors: {
@@ -14,6 +15,9 @@ module.exports = {
       black: '#000000',
       white: '#ffffff',
       yellow: '#FFBA33',
+    },
+    backgroundImage: {
+      banner: "url('./assets/images/wellcome.png')",
     },
   },
   plugins: [],

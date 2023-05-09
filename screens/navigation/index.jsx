@@ -2,25 +2,18 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import Wellcome from '../pages/wellcome';
-import SigninOrSignup from '../pages/wellcome/signinorsignup';
 import App from './app';
-import Signin from '../pages/auth/signin';
-import Signup from '../pages/auth/signup';
-import ForgotPassword from '../pages/auth/forgotpassword';
+import SplashScreen from '../pages/wellcome/splashscreen';
+import Auth from './auth';
+
 const Stack = createStackNavigator();
 function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Wellcome">
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
-          name="Wellcome"
-          component={Wellcome}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="SigninOrSignup"
-          component={SigninOrSignup}
+          name="SplashScreen"
+          component={SplashScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -29,18 +22,8 @@ function Navigation() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Signup"
-          component={Signup}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Signin"
-          component={Signin}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ForgotPassword"
-          component={ForgotPassword}
+          name="Auth"
+          component={Auth}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
