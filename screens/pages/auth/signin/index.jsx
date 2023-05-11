@@ -1,7 +1,78 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {getDataUserById} from '../../../redux/slice/user';
+import axiosApiIntances from '../../../utils/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
 
-function Signin({navigation}) {
+function Signin(props) {
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+  const handleInput = (name, value) => {
+    setForm({...form, [name]: value});
+  };
+  const handleLogin = async () => {
+    try {
+      const result = await axiosApiIntances.post('/users/login', form);
+      AsyncStorage.setItem('token', result.data.token);
+      await dispatch(getDataUserById());
+      Toast.show({
+        type: 'success',
+        text1: result.data.msg,
+        position: 'top',
+      });
+      setTimeout(() => {
+        props.navigation.navigate('App');
+      }, 4000);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Message',
+        text2: error.response.data.msg,
+      });
+    }
+  };
+
+  const toastConfig = {
+    /*
+      Overwrite 'success' type,
+      by modifying the existing `BaseToast` component
+    */
+    success: props => (
+      <BaseToast
+        {...props}
+        style={{borderLeftColor: 'green', height: 100}}
+        contentContainerStyle={{paddingHorizontal: 25}}
+        text1Style={{
+          fontSize: 20,
+          fontWeight: '600',
+        }}
+        text2Style={{
+          fontSize: 12,
+          fontWeight: '600',
+        }}
+      />
+    ),
+    /*
+      Overwrite 'error' type,
+      by modifying the existing `ErrorToast` component
+    */
+    error: props => (
+      <ErrorToast
+        {...props}
+        text1Style={{
+          fontSize: 17,
+        }}
+        text2Style={{
+          fontSize: 15,
+        }}
+      />
+    ),
+  };
   return (
     <View className="w-screen h-full bg-white">
       <View className="flex justify-center h-full my-auto px-[8%]">
@@ -22,11 +93,16 @@ function Signin({navigation}) {
             <TextInput
               className="w-full border-[#9F9F9F] border-b-[1px] pb-1"
               placeholder="Enter your email adress"
+              value={form.email}
+              keyboardType="email-address"
+              onChangeText={value => handleInput('email', value)}
             />
             <TextInput
               className="w-full border-[#9F9F9F] border-b-[1px] pb-1"
               placeholder="Enter your password"
               secureTextEntry={true}
+              value={form.password}
+              onChangeText={value => handleInput('password', value)}
             />
             <Text
               className="text-brown text-xs ml-1 font-poppins-semibold"
@@ -35,7 +111,9 @@ function Signin({navigation}) {
             </Text>
           </View>
           <View className="mt-5">
-            <TouchableOpacity className="h-16 bg-brown rounded-xl">
+            <TouchableOpacity
+              className="h-16 bg-brown rounded-xl"
+              onPress={handleLogin}>
               <Text className="text-white m-auto font-poppins-semibold">
                 Login
               </Text>
@@ -61,6 +139,7 @@ function Signin({navigation}) {
           </View>
         </View>
       </View>
+      <Toast config={toastConfig} />
     </View>
   );
 }

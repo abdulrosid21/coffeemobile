@@ -6,29 +6,44 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import Home from '../pages/home';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Detail from '../pages/detail';
 import Cart from '../pages/cart';
 import Checkout from '../pages/checkout';
 import Payments from '../pages/payments';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
+  const user = useSelector(state => state.user.data);
+  const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.clear();
+      props.navigation.replace('Auth', {
+        screen: 'Signin',
+      });
+    } catch (error) {}
+  };
   return (
     <View className="h-screen w-full">
       <DrawerContentScrollView {...props}>
         <View className="min-h-[100px] bg-blue-500 justify-center p-10 -mt-1 bg-brown rounded-tr-3xl rounded-br-2xl">
           <Image
-            className="rounded-full mx-auto"
-            source={require('../../assets/images/zulaikha.png')}
+            className="rounded-full mx-auto h-28 w-28"
+            source={{
+              uri: `${url}${user.image}`,
+            }}
           />
-          <Text className="text-lg text-white font-bold mx-auto">Zulaikha</Text>
+          <Text className="text-lg text-white font-bold mx-auto">
+            {user.display_name}
+          </Text>
           <Text className="text-xs text-white font-poppins-reguler mx-auto">
-            zulaikha17@gmail.com
+            {user.email}
           </Text>
         </View>
         <View className="w-full">
@@ -139,7 +154,7 @@ function CustomDrawerContent(props) {
           </View>
         </View>
       </DrawerContentScrollView>
-      <TouchableOpacity className="items-center py-3">
+      <TouchableOpacity className="items-center py-3" onPress={handleLogout}>
         <View className="flex-row my-auto mr-auto gap-4 pl-16">
           <Text className="text-[#6A4029] m-auto font-poppins-semibold">
             Sign-out
