@@ -8,7 +8,7 @@ const Header2 = props => {
       <TouchableOpacity onPress={() => props.navigation.goBack()}>
         <Icon name="left" color="#000" size={15} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => props.navigation.navigate('Cart')}>
+      <TouchableOpacity onPress={() => props.navigation.push('Cart')}>
         <Icon name="shoppingcart" color="#000" size={20} />
       </TouchableOpacity>
     </View>

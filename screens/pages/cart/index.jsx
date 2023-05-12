@@ -5,16 +5,24 @@ import Header3 from '../../components/headers/header3';
 
 import {Icon} from 'react-native-elements';
 import {Swipeable} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {removeFromCart, addCartQty, minusCartQty} from '../../redux/slice/cart';
+
 function Cart(props) {
-  const renderRightActions = () => {
+  const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
+  const dispatch = useDispatch();
+  const dataCart = useSelector(state => state.cart.cart);
+  const renderRightActions = id => {
     return (
       <View className="flex-row h-full items-center">
-        <View className="px-3 py-2 bg-red-500">
+        <TouchableOpacity
+          className="px-3 py-2 bg-red-500"
+          onPress={() => dispatch(removeFromCart(id))}>
           <Icon name="delete" color="#6A4029" size={24} />
-        </View>
-        <View className="px-3 py-2 bg-pink-500">
+        </TouchableOpacity>
+        <TouchableOpacity className="px-3 py-2 bg-pink-500">
           <Icon name="favorite" color="red" size={24} />
-        </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -31,81 +39,51 @@ function Cart(props) {
           swipe on an item to delete
         </Text>
       </View>
-      <View className="px-10 flex-col mb-3">
-        <Swipeable renderRightActions={renderRightActions}>
-          <View className="w-full p-5 flex-row bg-white rounded-[30px] relative">
-            <Image
-              className="w-16 h-16 rounded-full"
-              source={require('../../../assets/images/icecoffee.png')}
-            />
-            <View className="ml-4">
-              <Text className="font-poppins-semibold text-black">
-                Veggie tomato mix
-              </Text>
-              <Text className="font-poppins-reguler text-[#895537] my-2">
-                IDR 34.000
-              </Text>
-            </View>
-            <View className="absolute right-10 bottom-5">
-              <View className="flex-row w-16 justify-around bg-brown rounded-3xl">
-                <Text className="font-poppins-semibold text-white">-</Text>
-                <Text className="font-poppins-semibold text-white">1</Text>
-                <Text className="font-poppins-semibold text-white">+</Text>
+      {dataCart.map(item => {
+        return (
+          <View key={item.id} className="px-10 flex-col mb-3">
+            <Swipeable renderRightActions={() => renderRightActions(item.id)}>
+              <View className="w-full p-5 flex-row bg-white rounded-[30px] relative">
+                <Image
+                  className="w-16 h-16 rounded-full"
+                  source={{uri: url + item.image}}
+                />
+                <View className="ml-4">
+                  <Text className="font-poppins-semibold text-black">
+                    {item.menu_name}
+                  </Text>
+                  <Text className="font-poppins-reguler text-[#895537] my-2">
+                    {item.price.toLocaleString('id-ID', {
+                      style: 'currency',
+                      currency: 'IDR',
+                    })}
+                  </Text>
+                </View>
+                <View className="absolute right-10 bottom-5">
+                  <View className="flex-row w-16 justify-around bg-brown rounded-3xl">
+                    <TouchableOpacity
+                      onPress={() => dispatch(minusCartQty(item.id))}
+                      disabled={item.qty == 1 ? true : false}>
+                      <Text className="font-poppins-semibold text-white">
+                        -
+                      </Text>
+                    </TouchableOpacity>
+                    <Text className="font-poppins-semibold text-white">
+                      {item.qty}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => dispatch(addCartQty(item.id))}>
+                      <Text className="font-poppins-semibold text-white">
+                        +
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
-            </View>
+            </Swipeable>
           </View>
-        </Swipeable>
-      </View>
-      <View className="px-10 flex-col mb-3">
-        <Swipeable renderRightActions={renderRightActions}>
-          <View className="w-full p-5 flex-row bg-white rounded-[30px] relative">
-            <Image
-              className="w-16 h-16 rounded-full"
-              source={require('../../../assets/images/icecoffee.png')}
-            />
-            <View className="ml-4">
-              <Text className="font-poppins-semibold text-black">
-                Veggie tomato mix
-              </Text>
-              <Text className="font-poppins-reguler text-[#895537] my-2">
-                IDR 34.000
-              </Text>
-            </View>
-            <View className="absolute right-10 bottom-5">
-              <View className="flex-row w-16 justify-around bg-brown rounded-3xl">
-                <Text className="font-poppins-semibold text-white">-</Text>
-                <Text className="font-poppins-semibold text-white">1</Text>
-                <Text className="font-poppins-semibold text-white">+</Text>
-              </View>
-            </View>
-          </View>
-        </Swipeable>
-      </View>
-      <View className="px-10 flex-col mb-3">
-        <Swipeable renderRightActions={renderRightActions}>
-          <View className="w-full p-5 flex-row bg-white rounded-[30px] relative">
-            <Image
-              className="w-16 h-16 rounded-full"
-              source={require('../../../assets/images/icecoffee.png')}
-            />
-            <View className="ml-4">
-              <Text className="font-poppins-semibold text-black">
-                Veggie tomato mix
-              </Text>
-              <Text className="font-poppins-reguler text-[#895537] my-2">
-                IDR 34.000
-              </Text>
-            </View>
-            <View className="absolute right-10 bottom-5">
-              <View className="flex-row w-16 justify-around bg-brown rounded-3xl">
-                <Text className="font-poppins-semibold text-white">-</Text>
-                <Text className="font-poppins-semibold text-white">1</Text>
-                <Text className="font-poppins-semibold text-white">+</Text>
-              </View>
-            </View>
-          </View>
-        </Swipeable>
-      </View>
+        );
+      })}
       <View className="px-10 mt-auto mb-8">
         <TouchableOpacity
           className="h-16 bg-brown rounded-xl"
