@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import Header2 from '../../components/headers/header';
 import {useDispatch, useSelector} from 'react-redux';
@@ -11,9 +11,18 @@ function Detail(props) {
   const dataCart = useSelector(state => state.cart.cart);
 
   const foundItem = dataCart.some(c => c.id === data.id);
-  console.log(foundItem);
+
   const [qty, setQty] = useState(1);
-  const [size, setSize] = useState(1);
+  const [size, setSize] = useState('');
+  useEffect(() => {
+    const itemInCart = dataCart.find(c => c.id === data.id);
+    if (itemInCart) {
+      setSize(itemInCart.size);
+    } else {
+      setSize('');
+    }
+  }, [dataCart, data.id]);
+
   return (
     <ScrollView className="w-screen h-full bg-[#EBEBEB]">
       <Header2 {...props} />

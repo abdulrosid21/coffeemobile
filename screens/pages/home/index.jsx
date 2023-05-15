@@ -85,7 +85,9 @@ function Home(props) {
           setActive={setActive}
         />
       </View>
-      <Text className="px-10 my-4 ml-auto font-poppins-reguler text-[#6A4029]">
+      <Text
+        className="px-10 my-4 ml-auto font-poppins-reguler text-[#6A4029]"
+        onPress={() => props.navigation.navigate('All Menu')}>
         See More
       </Text>
       <View className="pl-10 w-full h-auto pt-11 ">

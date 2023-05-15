@@ -12,6 +12,7 @@ import Detail from '../pages/detail';
 import Cart from '../pages/cart';
 import Checkout from '../pages/checkout';
 import Payments from '../pages/payments';
+import DataList from '../pages/allmenu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 
@@ -92,7 +93,7 @@ function CustomDrawerContent(props) {
           <View className="w-full mx-auto">
             <DrawerItem
               label="All Menu"
-              onPress={() => props.navigation.navigate('Settings')}
+              onPress={() => props.navigation.navigate('All Menu')}
               icon={() => (
                 <Image
                   source={require('../../assets/images/menu.png')}
@@ -198,6 +199,11 @@ function SideBar() {
         component={Cart}
         options={{headerShown: false}}
       />
+      <Drawer.Screen
+        name="All Menu"
+        component={DataList}
+        options={{headerShown: false}}
+      />
     </Drawer.Navigator>
   );
 }
@@ -228,6 +234,11 @@ function App() {
       <Stack.Screen
         name="Payments"
         component={Payments}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="All Menu"
+        component={DataList}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
