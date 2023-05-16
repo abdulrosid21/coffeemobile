@@ -13,6 +13,9 @@ import Cart from '../pages/cart';
 import Checkout from '../pages/checkout';
 import Payments from '../pages/payments';
 import DataList from '../pages/allmenu';
+import Profile from '../pages/profile';
+import EditProfile from '../pages/profile/editProfile';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 
@@ -239,6 +242,16 @@ function App() {
       <Stack.Screen
         name="All Menu"
         component={DataList}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Edit Profile"
+        component={EditProfile}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

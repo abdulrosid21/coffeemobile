@@ -3,6 +3,7 @@ import {Image, Text, View, TouchableOpacity} from 'react-native';
 import Header3 from '../../components/headers/header3';
 import {useSelector} from 'react-redux';
 import axiosApiIntances from '../../utils/axios';
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
 
 function Payments(props) {
   const data = useSelector(state => state.address.data);
@@ -21,10 +22,54 @@ function Payments(props) {
         totalPayment: total + 0.1 * total,
         tax: 0.1 * total,
       });
-      console.log(result);
+      Toast.show({
+        type: 'success',
+        text1: result.data.msg,
+        position: 'top',
+      });
+      setTimeout(() => {
+        props.navigation.push('App Home');
+      }, 4000);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const toastConfig = {
+    /*
+      Overwrite 'success' type,
+      by modifying the existing `BaseToast` component
+    */
+    success: props => (
+      <BaseToast
+        {...props}
+        style={{borderLeftColor: 'green', height: 100}}
+        contentContainerStyle={{paddingHorizontal: 25}}
+        text1Style={{
+          fontSize: 20,
+          fontWeight: '600',
+        }}
+        text2Style={{
+          fontSize: 12,
+          fontWeight: '600',
+        }}
+      />
+    ),
+    /*
+      Overwrite 'error' type,
+      by modifying the existing `ErrorToast` component
+    */
+    error: props => (
+      <ErrorToast
+        {...props}
+        text1Style={{
+          fontSize: 17,
+        }}
+        text2Style={{
+          fontSize: 15,
+        }}
+      />
+    ),
   };
   return (
     <View className="w-screen h-full bg-[#EBEBEB]">
@@ -104,15 +149,14 @@ function Payments(props) {
       <View className="px-10 mt-auto mb-8">
         <TouchableOpacity
           className="h-16 bg-brown rounded-xl"
-          onPress={() => {
-            handleOrder();
-            props.navigation.push('App Home');
-          }}>
+          onPress={handleOrder}>
           <Text className="text-white m-auto font-poppins-semibold">
             Pay now
           </Text>
         </TouchableOpacity>
       </View>
+
+      <Toast config={toastConfig} />
     </View>
   );
 }
