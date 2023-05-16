@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import axiosApiIntances from '../../utils/axios';
 import {useDispatch} from 'react-redux';
 import {getDetailMenu} from '../../redux/slice/menu';
+import {getDataUserById} from '../../redux/slice/user';
 
 function Home(props) {
   const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
@@ -48,6 +49,7 @@ function Home(props) {
   useEffect(() => {
     getDataMenus();
     getCategories();
+    dispatch(getDataUserById());
   }, []);
 
   useEffect(() => {

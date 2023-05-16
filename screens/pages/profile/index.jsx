@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header3 from '../../components/headers/header3';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -7,7 +7,7 @@ function Profile(props) {
   const user = useSelector(state => state.user.data);
   return (
     <View className="w-screen h-full">
-      <Header3 name="" />
+      <Header3 name="" {...props} />
       <View className="px-10">
         <Text className="text-black font-poppins-bold text-3xl">
           My Profile

@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import {TextInput, View, Image, Text, TouchableOpacity} from 'react-native';
 
-import ImageCropPicker from 'react-native-image-crop-picker';
-
+import * as ImagePicker from 'react-native-image-picker';
 import Header3 from '../../components/headers/header3';
 
 import RadioButton from '../../components/radioButton';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import axiosApiIntances from '../../utils/axios';
+import {getDataUserById} from '../../redux/slice/user';
+
 function EditProfile(props) {
+  const dispatch = useDispatch();
   const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
   const dataUser = useSelector(state => state.user.data);
   const date = new Date(dataUser.dateofbirth);
@@ -17,18 +20,48 @@ function EditProfile(props) {
   };
 
   const [imageSource, setImageSource] = useState(null);
-
   const selectImage = () => {
-    ImageCropPicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true,
-    }).then(image => {
-      const source = {uri: image.path};
-      setImageSource(source);
+    const options = {
+      title: 'Select Image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        setImageSource(response.assets[0]);
+      }
     });
   };
-
+  console.log(imageSource);
+  const handle = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('images', {
+        uri: imageSource.uri,
+        type: imageSource.type,
+        name: imageSource.fileName,
+      });
+      const result = await axiosApiIntances.patch(
+        'users/image-upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      await dispatch(getDataUserById());
+      console.log(result.data.msg);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View className="w-screen h-full">
       <Header3 name="Edit Profile" {...props} />
@@ -111,7 +144,7 @@ function EditProfile(props) {
         />
       </View>
       <View className="px-10 my-10">
-        <TouchableOpacity className="h-16 bg-brown rounded-xl">
+        <TouchableOpacity onPress={handle} className="h-16 bg-brown rounded-xl">
           <Text className="text-white m-auto font-poppins-semibold">
             Save and Update
           </Text>
