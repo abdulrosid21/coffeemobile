@@ -1,9 +1,10 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {URL_DEPLOY, URL_LOCAL} from '@env';
 const axiosApiIntances = axios.create({
-  // baseURL: 'https://express-coffee-shop.vercel.app',
-  baseURL: 'http:192.168.0.120:3001/',
+  // baseURL: URL_DEPLOY,
+  baseURL: URL_LOCAL,
 });
 
 // Add a request interceptor

@@ -4,8 +4,9 @@ import Header2 from '../../components/headers/header';
 import {useDispatch, useSelector} from 'react-redux';
 import {addMenusToCart} from '../../redux/slice/cart';
 
+import {URL_IMAGE} from '@env';
 function Detail(props) {
-  const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
+  const url = URL_IMAGE;
   const dispatch = useDispatch();
   const data = useSelector(state => state.menu.data);
   const dataCart = useSelector(state => state.cart.cart);

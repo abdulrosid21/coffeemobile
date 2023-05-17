@@ -1,9 +1,13 @@
 import React, {useEffect} from 'react';
 import Header3 from '../../components/headers/header3';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {getDataOrder} from '../../redux/slice/orders';
+
+import {URL_IMAGE} from '@env';
 function Profile(props) {
-  const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
+  const dispatch = useDispatch();
+  const url = URL_IMAGE;
   const user = useSelector(state => state.user.data);
   return (
     <View className="w-screen h-full">
@@ -43,7 +47,12 @@ function Profile(props) {
           </View>
         </View>
         <View className="gap-y-5">
-          <TouchableOpacity className="flex-row w-full h-14 bg-white justify-between px-5 items-center rounded-lg">
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(getDataOrder());
+              props.navigation.navigate('Order');
+            }}
+            className="flex-row w-full h-14 bg-white justify-between px-5 items-center rounded-lg">
             <Text className="font-poppins-semibold text-black">
               Order History
             </Text>
@@ -53,7 +62,9 @@ function Profile(props) {
               source={require('../../../assets/images/arig.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity className="flex-row w-full h-14 bg-white justify-between px-5 items-center rounded-lg">
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('Edit Password')}
+            className="flex-row w-full h-14 bg-white justify-between px-5 items-center rounded-lg">
             <Text className="font-poppins-semibold text-black">
               Edit Password
             </Text>

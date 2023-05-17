@@ -17,8 +17,9 @@ import {useDispatch} from 'react-redux';
 import {getDetailMenu} from '../../redux/slice/menu';
 import {getDataUserById} from '../../redux/slice/user';
 
+import {URL_IMAGE} from '@env';
 function Home(props) {
-  const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
+  const url = URL_IMAGE;
   const dispatch = useDispatch();
   const [active, setActive] = useState('Foods');
   const [menus, setMenus] = useState([]);

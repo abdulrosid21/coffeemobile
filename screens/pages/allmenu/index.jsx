@@ -15,8 +15,9 @@ import axiosApiIntances from '../../utils/axios';
 import {useDispatch} from 'react-redux';
 import {getDetailMenu} from '../../redux/slice/menu';
 
+import {URL_IMAGE} from '@env';
 function DataList(props) {
-  const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
+  const url = URL_IMAGE;
   const dispatch = useDispatch();
   const [menus, setMenus] = useState([]);
   const [keyword, setKeyword] = useState('');

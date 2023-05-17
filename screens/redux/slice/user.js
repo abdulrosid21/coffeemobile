@@ -4,7 +4,7 @@ import axiosApiIntances from '../../utils/axios';
 export const getDataUserById = createAsyncThunk(
   'user/getDataUserById',
   async () => {
-    const result = await axiosApiIntances.get('/users/');
+    const result = await axiosApiIntances.get('users/');
     return result.data.data;
   },
 );

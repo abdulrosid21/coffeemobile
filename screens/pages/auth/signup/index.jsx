@@ -50,7 +50,7 @@ function Signup(props) {
   };
   const handleAddData = async () => {
     try {
-      const result = await axiosApiIntances.post('/users/addata', form);
+      const result = await axiosApiIntances.post('users/addata', form);
       Toast.show({
         type: 'success',
         text1: 'Success',

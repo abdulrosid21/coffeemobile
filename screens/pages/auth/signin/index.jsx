@@ -17,7 +17,7 @@ function Signin(props) {
   };
   const handleLogin = async () => {
     try {
-      const result = await axiosApiIntances.post('/users/login', form);
+      const result = await axiosApiIntances.post('users/login', form);
       AsyncStorage.setItem('token', result.data.token);
       await dispatch(getDataUserById());
       Toast.show({

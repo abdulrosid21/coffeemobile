@@ -49,10 +49,7 @@ function ForgotPassword(props) {
   };
   const handleSendEmail = async () => {
     try {
-      const result = await axiosApiIntances.post(
-        '/users/forgot-password',
-        form,
-      );
+      const result = await axiosApiIntances.post('users/forgot-password', form);
       Toast.show({
         type: 'success',
         text1: 'Success',

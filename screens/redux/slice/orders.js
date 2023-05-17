@@ -1,13 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axiosApiIntances from '../../utils/axios';
 
-export const getDetailMenu = createAsyncThunk(
-  'menu/getDetailMenu',
-  async payload => {
-    const result = await axiosApiIntances.get(`menus/${payload}`);
-    return result.data.data[0];
-  },
-);
+export const getDataOrder = createAsyncThunk('order/getDataOrder', async () => {
+  const result = await axiosApiIntances.get('order/byuser');
+  return result.data.data;
+});
 
 const initialState = {
   data: {},
@@ -16,26 +13,26 @@ const initialState = {
   message: '',
 };
 
-const userSlice = createSlice({
-  name: 'menu',
+const orderSlice = createSlice({
+  name: 'order',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(getDetailMenu.pending, state => {
+      .addCase(getDataOrder.pending, state => {
         state.isLoading = true;
         state.isError = false;
         state.message = '';
       })
-      .addCase(getDetailMenu.fulfilled, (state, action) => {
+      .addCase(getDataOrder.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(getDetailMenu.rejected, state => {
+      .addCase(getDataOrder.rejected, state => {
         state.isLoading = false;
         state.data = {};
       });
   },
 });
 
-export default userSlice.reducer;
+export default orderSlice.reducer;

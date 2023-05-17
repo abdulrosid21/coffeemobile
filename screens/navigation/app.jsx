@@ -15,16 +15,22 @@ import Payments from '../pages/payments';
 import DataList from '../pages/allmenu';
 import Profile from '../pages/profile';
 import EditProfile from '../pages/profile/editProfile';
+import Order from '../pages/order';
+import EditPassword from '../pages/profile/editPassword';
+
+import {getDataOrder} from '../redux/slice/orders';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {URL_IMAGE} from '@env';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user.data);
-  const url = 'https://res.cloudinary.com/dqgebz3rr/image/upload/v1679725330/';
+  const url = URL_IMAGE;
   const handleLogout = async () => {
     try {
       await AsyncStorage.clear();
@@ -54,9 +60,10 @@ function CustomDrawerContent(props) {
           <View className="w-full mx-auto">
             <DrawerItem
               label="Edit Profile"
-              onPress={() => props.navigation.navigate('Settings')}
+              onPress={() => props.navigation.navigate('Edit Profile')}
               icon={() => (
                 <Image
+                  resizeMode="contain"
                   source={require('../../assets/images/gg_profile.png')}
                   style={{width: 24, height: 24}}
                 />
@@ -75,9 +82,13 @@ function CustomDrawerContent(props) {
           <View className="w-full mx-auto">
             <DrawerItem
               label="Orders"
-              onPress={() => props.navigation.navigate('Settings')}
+              onPress={() => {
+                dispatch(getDataOrder());
+                props.navigation.navigate('Order');
+              }}
               icon={() => (
                 <Image
+                  resizeMode="contain"
                   source={require('../../assets/images/buy.png')}
                   style={{width: 20, height: 20}}
                 />
@@ -99,6 +110,7 @@ function CustomDrawerContent(props) {
               onPress={() => props.navigation.navigate('All Menu')}
               icon={() => (
                 <Image
+                  resizeMode="contain"
                   source={require('../../assets/images/menu.png')}
                   style={{width: 24, height: 24}}
                 />
@@ -120,6 +132,7 @@ function CustomDrawerContent(props) {
               onPress={() => props.navigation.navigate('Settings')}
               icon={() => (
                 <Image
+                  resizeMode="contain"
                   source={require('../../assets/images/priv.png')}
                   style={{width: 24, height: 24}}
                 />
@@ -141,6 +154,7 @@ function CustomDrawerContent(props) {
               onPress={() => props.navigation.navigate('Settings')}
               icon={() => (
                 <Image
+                  resizeMode="contain"
                   source={require('../../assets/images/sec.png')}
                   style={{width: 24, height: 24}}
                 />
@@ -252,6 +266,16 @@ function App() {
       <Stack.Screen
         name="Edit Profile"
         component={EditProfile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Order"
+        component={Order}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Edit Password"
+        component={EditPassword}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

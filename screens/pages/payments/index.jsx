@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Text, View, TouchableOpacity} from 'react-native';
+import {Image, Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import Header3 from '../../components/headers/header3';
 import {useSelector} from 'react-redux';
 import axiosApiIntances from '../../utils/axios';
@@ -72,7 +72,7 @@ function Payments(props) {
     ),
   };
   return (
-    <View className="w-screen h-full bg-[#EBEBEB]">
+    <ScrollView className="w-screen h-full bg-[#EBEBEB]">
       <Header3 name="" {...props} />
       <View className="px-10 w-full">
         <Text className="font-poppins-bold text-3xl text-black">
@@ -85,7 +85,7 @@ function Payments(props) {
         />
         <View className="bg-[#9F9F9F] h-[2px] my-4" />
 
-        <View className=" w-full">
+        <ScrollView className="w-full">
           {cart.map(item => {
             return (
               <View
@@ -114,7 +114,7 @@ function Payments(props) {
               </View>
             );
           })}
-        </View>
+        </ScrollView>
         <View className="bg-[#9F9F9F] h-[2px] my-4" />
         <View className="flex-row justify-between">
           <Text className="font-poppins-reguler text-black">Subtotal</Text>
@@ -157,7 +157,7 @@ function Payments(props) {
       </View>
 
       <Toast config={toastConfig} />
-    </View>
+    </ScrollView>
   );
 }
 

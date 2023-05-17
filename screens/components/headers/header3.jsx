@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 const Header3 = ({name, navigation}) => {
   return (
-    <View className="flex-row items-center justify-between bg-[#EBEBEB] p-10">
+    <View className="flex-row items-center justify-between p-10">
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="left" color="#000" size={15} />
       </TouchableOpacity>
