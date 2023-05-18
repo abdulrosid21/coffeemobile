@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {URL_DEPLOY, URL_LOCAL} from '@env';
 const axiosApiIntances = axios.create({
-  // baseURL: URL_DEPLOY,
-  baseURL: URL_LOCAL,
+  baseURL: URL_DEPLOY,
+  // baseURL: URL_LOCAL,
 });
 
 // Add a request interceptor

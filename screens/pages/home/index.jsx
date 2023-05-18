@@ -149,7 +149,9 @@ function Home(props) {
         </View>
         {roles == 'admin' ? (
           <View className="px-10 mt-2 my-14">
-            <TouchableOpacity className="h-16 bg-brown rounded-xl">
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Menu')}
+              className="h-16 bg-brown rounded-xl">
               <Text className="text-white m-auto font-poppins-semibold">
                 Add product
               </Text>

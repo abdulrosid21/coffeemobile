@@ -18,6 +18,7 @@ import EditProfile from '../pages/profile/editProfile';
 import Order from '../pages/order';
 import EditPassword from '../pages/profile/editPassword';
 import ManageOrder from '../pages/order/manageOrder';
+import Menu from '../pages/menu';
 
 import {getDataOrder} from '../redux/slice/orders';
 
@@ -289,6 +290,11 @@ function App() {
       <Stack.Screen
         name="Manage Order"
         component={ManageOrder}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Menu"
+        component={Menu}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
