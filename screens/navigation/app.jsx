@@ -17,6 +17,7 @@ import Profile from '../pages/profile';
 import EditProfile from '../pages/profile/editProfile';
 import Order from '../pages/order';
 import EditPassword from '../pages/profile/editPassword';
+import ManageOrder from '../pages/order/manageOrder';
 
 import {getDataOrder} from '../redux/slice/orders';
 
@@ -131,28 +132,30 @@ function CustomDrawerContent(props) {
               iconStyle={{marginRight: -4}}
             />
           </View>
-          <View className="w-full mx-auto">
-            <DrawerItem
-              label="Privacy policy"
-              onPress={() => props.navigation.navigate('Settings')}
-              icon={() => (
-                <Image
-                  resizeMode="contain"
-                  source={require('../../assets/images/priv.png')}
-                  style={{width: 24, height: 24}}
-                />
-              )}
-              labelStyle={{
-                marginLeft: -16,
-                borderBottomWidth: 1,
-                paddingBottom: 5,
-                borderColor: '#6A4029',
-                color: '#6A4029',
-                fontFamily: 'Poppins-SemiBold',
-              }}
-              iconStyle={{marginRight: -4}}
-            />
-          </View>
+          {user.roles == 'admin' ? (
+            <View className="w-full mx-auto">
+              <DrawerItem
+                label="Manage Order"
+                onPress={() => props.navigation.navigate('Manage Order')}
+                icon={() => (
+                  <Image
+                    resizeMode="contain"
+                    source={require('../../assets/images/priv.png')}
+                    style={{width: 24, height: 24}}
+                  />
+                )}
+                labelStyle={{
+                  marginLeft: -16,
+                  borderBottomWidth: 1,
+                  paddingBottom: 5,
+                  borderColor: '#6A4029',
+                  color: '#6A4029',
+                  fontFamily: 'Poppins-SemiBold',
+                }}
+                iconStyle={{marginRight: -4}}
+              />
+            </View>
+          ) : null}
           <View className="w-full mx-auto">
             <DrawerItem
               label="Security"
@@ -281,6 +284,11 @@ function App() {
       <Stack.Screen
         name="Edit Password"
         component={EditPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Manage Order"
+        component={ManageOrder}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
