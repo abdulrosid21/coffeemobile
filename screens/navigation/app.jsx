@@ -52,6 +52,11 @@ function CustomDrawerContent(props) {
           <Text className="text-lg text-white font-bold mx-auto">
             {user.display_name}
           </Text>
+          {user.roles == 'admin' ? (
+            <Text className="text-lg text-white font-bold mx-auto">
+              {user.roles}
+            </Text>
+          ) : null}
           <Text className="text-xs text-white font-poppins-reguler mx-auto">
             {user.email}
           </Text>

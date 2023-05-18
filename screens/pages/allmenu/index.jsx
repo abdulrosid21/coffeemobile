@@ -12,11 +12,12 @@ import Header from '../../components/headers/header3';
 
 import Icon from 'react-native-vector-icons/Feather';
 import axiosApiIntances from '../../utils/axios';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getDetailMenu} from '../../redux/slice/menu';
 
 import {URL_IMAGE} from '@env';
 function DataList(props) {
+  const roles = useSelector(state => state.user.data.roles);
   const url = URL_IMAGE;
   const dispatch = useDispatch();
   const [menus, setMenus] = useState([]);
@@ -55,10 +56,10 @@ function DataList(props) {
     getDataMenus();
   }, [keyword, currentPage]);
 
-  const handleDetail = async id => {
+  const handleDetail = async (id, value) => {
     try {
       await dispatch(getDetailMenu(id));
-      props.navigation.push('Detail');
+      props.navigation.push('Detail', {isEdit: value});
     } catch (error) {
       console.log(error);
     }
@@ -87,14 +88,25 @@ function DataList(props) {
                   return (
                     <TouchableOpacity
                       key={item.id}
-                      onPress={() => handleDetail(item.id)}
+                      onPress={() => handleDetail(item.id, false)}
                       className="gap-3">
                       <View className="w-[150px] h-[200px]">
-                        <View className="h-[150px] mt-auto  bg-white rounded-3xl">
+                        <View className="h-[150px] mt-auto relative bg-white rounded-3xl">
                           <Image
                             className="mx-auto h-32 w-32 rounded-3xl -mt-16"
                             source={{uri: url + item.image}}
                           />
+                          {roles == 'admin' ? (
+                            <TouchableOpacity
+                              onPress={() => handleDetail(item.id, true)}
+                              className="absolute right-[3%] top-[30%] z-20 w-7 h-7 bg-brown rounded-full">
+                              <Image
+                                className="h-3 w-3 m-auto"
+                                resizeMode="contain"
+                                source={require('../../../assets/images/pensil.png')}
+                              />
+                            </TouchableOpacity>
+                          ) : null}
                           <Text className="mx-auto my-3 font-poppins-semibold text-black">
                             {item.menu_name}
                           </Text>
